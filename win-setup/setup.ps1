@@ -25,7 +25,7 @@ scoop bucket add Ash258 'https://github.com/Ash258/scoop-Ash258.git'
 scoop bucket add darkliquid 'https://github.com/darkliquid/bucket.git'
 
 scoop install aria2  
-scoop install 7zip concfg git gpg vscode vcredist2017 DirectX docker nodejs yarn sudo desktopinfo which envsubst bulk-crap-uninstaller
+scoop install 7zip concfg git gpg vscode vcredist2017 DirectX docker nodejs yarn sudo desktopinfo which envsubst bulk-crap-uninstaller copyq
 
 Copy-Item -Path '.\desktopinfo.ini' -Destination "$HOME\scoop\apps\desktopinfo\current\desktopinfo.ini" -Force
 
