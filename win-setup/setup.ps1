@@ -23,6 +23,7 @@ Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.
 scoop bucket add tlz https://github.com/TheLastZombie/scoop-bucket
 scoop bucket add Ash258 'https://github.com/Ash258/scoop-Ash258.git'
 scoop bucket add darkliquid 'https://github.com/darkliquid/bucket.git'
+scoop bucket add dorado 'https://github.com/chawyehsu/dorado'
 
 scoop install aria2  
 scoop install 7zip concfg git gpg vscode vcredist2017 DirectX docker nodejs yarn sudo desktopinfo which envsubst bulk-crap-uninstaller copyq coreutils
