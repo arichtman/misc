@@ -18,6 +18,7 @@ foreach ($exe in $steamExes){
 
 # Here I add any custom rules that I wish to add
 $outputObject += @(@{ AppName = "firefox"; Rule = 1})
+$outputObject += @(@{ AppName = "brave"; Rule = 1})
 
 # Have to close down and re-open otherwise cached/in-use values will be written
 Stop-Process -Force -Name livelywpf
