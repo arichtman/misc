@@ -18,3 +18,10 @@ foreach($group in $dupeGroups){
 foreach($finding in $deletionList){
     Remove-Item $finding.FullName
 }
+
+$files = Get-ChildItem -Recurse -Filter "*(1)*"  | Where-Object{ !$_.PSIsContainer }
+foreach($file in $files){
+    if (test-path $file.fullname.Replace(' (1)','') ){
+        remove-item $file.fullname
+    }
+}
