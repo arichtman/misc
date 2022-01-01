@@ -6,11 +6,6 @@ $DOMAIN = $env:UserDomain
 if ($(Test-Path -Path $PROFILE )) { Move-Item -Path $PROFILE -Destination "$PROFILE.bak" -Force }
 Copy-item '.\Microsoft.PowerShell_profile.ps1' $PROFILE -Force
 
-# install chocolatey and packages
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-choco install -y powershell soundswitch
-
 # Install powershell modules
 
 Install-module posh-git 
@@ -19,16 +14,43 @@ install-module poshfuck
 # Install scoop, new buckets, and packages
 
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+scoop install 7zip git
+scoop config SCOOP_REPO 'https://github.com/Ash258/Scoop-Core'
+scoop update
+scoop status
+scoop checkup
 
 scoop bucket add tlz https://github.com/TheLastZombie/scoop-bucket
 scoop bucket add Ash258 'https://github.com/Ash258/scoop-Ash258.git'
 scoop bucket add darkliquid 'https://github.com/darkliquid/bucket.git'
 scoop bucket add dorado 'https://github.com/chawyehsu/dorado'
 
-scoop install aria2  
-scoop install 7zip concfg git gpg vscode vcredist2017 DirectX docker nodejs yarn sudo desktopinfo which envsubst bulk-crap-uninstaller copyq coreutils
+scoop install aria2
+$packages = @(
+    'aria2'
+    '7zip',
+    'concfg',
+    'git',
+    'gpg',
+    'vscode',
+    'vcredist2017',
+    'DirectX',
+    'docker',
+    'volta',
+    'yarn',
+    'sudo',
+    'which',
+    'envsubst',
+    'bulk-crap-uninstaller',
+    'copyq',
+    'coreutils',
+    'imageglass'
+)
+$packages | ForEach-Object{ shovel install $_ }
 
-Copy-Item -Path '.\desktopinfo.ini' -Destination "$HOME\scoop\apps\desktopinfo\current\desktopinfo.ini" -Force
+# enable tab-completion for Volta
+(& volta completions powershell) | Out-String | Invoke-Expression
+volta install node
 
 # Export variables from process scope so `envsubst` can use them
 $ExportVars = @( "USERID", "USER", "DOMAIN", "HOME")
