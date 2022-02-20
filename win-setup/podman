@@ -4,7 +4,7 @@
 # Credit to GERALD MÜCKE of DevCon5 for most of this
 
 PODMAN_USER=$(id -u)
-BASEPATH=/tmp/user/$PODMAN_USER/podman
+BASEPATH=/tmp/podman-run-${PODMAN_USER}/podman
 PID_FILE=$BASEPATH/podman.pid
 SOCK_FILE=$BASEPATH/podman.sock
 
