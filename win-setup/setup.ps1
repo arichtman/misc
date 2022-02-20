@@ -14,21 +14,21 @@ install-module poshfuck
 # Install scoop, new buckets, and packages
 
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-scoop install 7zip git
+scoop install 7zip git aria2
+
 scoop config SCOOP_REPO 'https://github.com/Ash258/Scoop-Core'
 scoop update
 scoop status
 scoop checkup
 
-scoop bucket add tlz https://github.com/TheLastZombie/scoop-bucket
-scoop bucket add Ash258 'https://github.com/Ash258/scoop-Ash258.git'
-scoop bucket add darkliquid 'https://github.com/darkliquid/bucket.git'
-scoop bucket add dorado 'https://github.com/chawyehsu/dorado'
+shovel bucket add tlz https://github.com/TheLastZombie/scoop-bucket
+shovel bucket add Ash258 'https://github.com/Ash258/scoop-Ash258.git'
+shovel bucket add darkliquid 'https://github.com/darkliquid/bucket.git'
+shovel bucket add dorado 'https://github.com/chawyehsu/dorado'
+shovel bucket add lemon https://github.com/hoilc/scoop-lemon
+shovel bucket add arichtman https://github.com/arichtman/shovel-bucket
 
-scoop install aria2
 $packages = @(
-    'aria2'
-    '7zip',
     'concfg',
     'git',
     'gpg',
