@@ -1,23 +1,18 @@
 #!/bin/ash
-
-ORIGINAL_USER=$(whoami) su
-apk update
-apk add libstdc++
-
 # It's insecure but it's local and a scoped token
 git config credential.helper store
+
+su -l root
+apk update
+apk add libstdc++
 
 # woah there pardner, while this works, we might wanna review...
 apk add docker
 
 #region Enable passwordless su for my account
+
+USR=$(stat -c%U $(readlink /proc/self/fd/0))
 cd /etc/pam.d/
-
-# This is nasty but I can't find whoami, w, or logname on Alpine to locate the origin user
-#USR=$(getent passwd | tail -1 | cut -d: -f1)
-# Can't get the field wide enough, it truncates the username
-#USR=$(ps -o user= | grep -v root | head -1)
-
 sed -i "3 i auth            sufficient      pam_succeed_if.so use_uid user = $USR" su
 
 #endregion
