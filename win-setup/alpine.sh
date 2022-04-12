@@ -6,6 +6,8 @@ su -l root
 apk update
 apk add libstdc++
 
+apk add git tzdata
+
 # woah there pardner, while this works, we might wanna review...
 apk add docker
 
