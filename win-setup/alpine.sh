@@ -2,6 +2,10 @@
 # It's insecure but it's local and a scoped token
 git config credential.helper store
 
+# Configure identity
+git config --global user.name "Richtman, Ariel"
+git config --global user.email "10679234+arichtman@users.noreply.github.com"
+
 su -l root
 apk update
 apk add libstdc++
@@ -55,5 +59,16 @@ echo "$ORIGINAL_USER:100000:65536" >/etc/subgid
 
 # Test
 podman run --rm hello-world
+
+#endregion
+
+# region devcontainers
+# So out the box the VSC remote-containers extension complains that WSL is v1, which it isn't, I've confirmed using wsl -l -v
+# apk add-ing docker changed the error but now it's unable to locate the unix socket to communicate with the daemon
+# I fired up the init.d service but I can't see the socket - I'm thinking we add `-H unix:///var/run/docker.sock` or modify the daemon.json file...
+# https://wiki.alpinelinux.org/wiki/Docker
+apk add docker-cli docker
+rc-update add docker boot
+service docker start
 
 #endregion
