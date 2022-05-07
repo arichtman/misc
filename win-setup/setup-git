@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Configure identity
 git config --global user.name "Richtman, Ariel"
@@ -14,15 +15,13 @@ gpg --list-secret-keys --keyid-format=long
 git config --global user.signingKey $KEY
 git config --global commit.gpgSign true
 # This config is required for Powershell signing to work, otherwise error "No secret key"
-$gpgPath = which gpg
-git config --global gpg.program $gpgPath
+git config --global gpg.program $(which gpg)
 
 # Cache credentials for HTTPS
 git config --global credential.helper "cache --timeout=3600"
 
 # Set up global, unversioned ignore file
-git config --global core.excludesfile ~/.gitignore
-printf "*~\n.env\n.cache\n.vaultpass" > ~/.gitignore_global
+printf "*~\n.env\n.cache\n.vaultpass" > ~/.config/git/ignore
 
 # Pretty sure these QoLs come pre-enabled but nice to be sure
 git config --global color.ui true

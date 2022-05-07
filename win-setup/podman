@@ -2,13 +2,27 @@
 
 # init.d file for podman service
 # Credit to GERALD MÜCKE of DevCon5 for most of this
+USER=$(id -nu)
+if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+  export XDG_RUNTIME_DIR=/run/user/$UID
+  if [[ ! -d "$XDG_RUNTIME_DIR" ]]; then
+    export XDG_RUNTIME_DIR=/tmp/$USER-runtime
+    if [[ ! -d "$XDG_RUNTIME_DIR" ]]; then
+      mkdir -m 0700 "$XDG_RUNTIME_DIR"
+    fi
+  fi
+fi
 
-PODMAN_USER=$(id -u)
-BASEPATH=/tmp/podman-run-${PODMAN_USER}/podman
+BASEPATH=${XDG_RUNTIME_DIR}/podman
 PID_FILE=$BASEPATH/podman.pid
 SOCK_FILE=$BASEPATH/podman.sock
 
 start() {
+  if [[ -S "$SOCK_FILE" || -f "$PID_FILE" ]]; then
+    echo "podman service may already be running"
+    return 1
+  fi
+
   mkdir -p $BASEPATH
   podman system service --time=0 unix://$SOCK_FILE &
   echo "$!" > $PID_FILE

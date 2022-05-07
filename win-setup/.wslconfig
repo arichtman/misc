@@ -1,0 +1,8 @@
+[user]
+default = arichtman
+
+[automount]
+enabled = false
+
+[network]
+hostname = wsl
