@@ -39,14 +39,41 @@ curl -H "Content-Type: application/json" --unix-socket /var/run/docker.sock http
 
 #endregion
 
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.11 python3.11-distutils python3.11-dev
+add-apt-repository ppa:deadsnakes/ppa
+apt-get update
+apt-get install python3.11 python3.11-distutils python3.11-dev
 
 curl -sSL https://install.python-poetry.org | python3 -
+
+exit
 
 poetry config virtualenvs.in-project true
 
 
 git config --global init.templateDir ~/.git-template
 pre-commit init-templatedir ~/.git-template
+
+#region homebrew
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/arichtman/.profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+sudo su -l
+#apt-get install build-essential -y
+
+#endregion
+
+# Install zq for data munging
+brew install brimdata/tap/zq
+# Bitwarden for Chezmoi secret values
+brew install bitwarden-cli
+
+#region Chezmoi/dotfiles
+
+mkdir -p ~/.local
+cd ~/.local
+sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply arichtman
+chezmoi(){ ~/.local/bin/chezmoi $@ ; }
+export EDITOR=nano
+
+#endregion

@@ -1,0 +1,6 @@
+#!/bin/bash
+# Contains aliases to run commands in Podman. Aim is not to pollute the host O/S or cause version/dependency conflicts.
+
+podman-run() { podman run --rm -it --volume $(pwd):/root --user root $PODMAN_ARGS docker.io/$@ ; }
+
+bw() { PODMAN_ARGS='--entrypoint /bin/ash' podman-run jitesoft/bitwarden-client $@ ; }
